@@ -20,92 +20,104 @@ public class Terminal {
 		Scanner sc1 = new Scanner(file);
 		Scanner sc2 = new Scanner(System.in);
 		String key = sc1.next();
-		System.out.print("Enter stock symbol: ");
-		String symbol = sc2.next().toUpperCase();
-		callQuote(symbol, key);
-		callNews(symbol, key, sc2);
+		
+		boolean start = true;
+		String selection = "";
+		programTitle();
+		
+		while(start) {
+			mainMenu();
+			selection = sc2.nextLine();
+			if(selection.matches("1")) {
+				quoteTitle();
+				Stocks stock = new Stocks();
+				System.out.print("Enter stock symbol: ");
+				String symbol = sc2.next().toUpperCase();
+				stock.callQuote(symbol, key);
+			} else if(selection.matches("2")) {
+				Stocks stock = new Stocks();
+				String symbol = sc2.next().toUpperCase();
+				/* Select story summary
+				 * 
+				 */
+				stock.callNews(symbol, key, sc2);
+			} else if(selection.matches("3")) {
+				tradingTitle();
+				trade();
+				start = true;		// as a placeholder
+			} else if(selection.matches("4")) {
+				portfolioTitle();
+				portfolio();
+				start = true;		// as a placeholder
+			} else if(selection.matches("5")) {
+				System.out.println("\nGoodbye");
+				start = false;
+			}
+		}		
 		
 		sc1.close();
 		sc2.close();		
 	}
 	
-	// callQuote: Calls Yahoo API --> get stock symbol, current price, and previous close
-	public static void callQuote(String symbol, String key) throws Exception {
-		HttpResponse<String> response = Unirest.get("https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/quote?symbols=" + symbol) 
-				.header("x-rapidapi-key", key)
-				.header("x-rapidapi-host", "yahoo-finance-low-latency.p.rapidapi.com")
-				.asString();
-		
-		String json = response.getBody();	// Get the response 
-
-		
-		/* Getting objects from JSON object & JSON array
-		 * Has to be an easier way to parse nested JSON instead of creating multiple
-		 * objects each time
-		 */
-		
-//		System.out.println(json);
-		
-		JSONObject obj = new JSONObject(json);
-		obj = new JSONObject(obj.get("quoteResponse").toString());
-		JSONArray arr = new JSONArray(obj.get("result").toString());
-		obj = new JSONObject(arr.get(0).toString());
-		/* The keyset contains alot of information that can be 
-		 * extracted from the JSON object
-		 * obj.keySet()
-		 */
-		
-		System.out.println("Symbol: " + obj.get("symbol"));
-		System.out.println("Percent change: " + obj.get("regularMarketChangePercent"));
-		System.out.println("Open price: " + obj.get("regularMarketOpen"));
-		System.out.println("Current price: " + obj.get("regularMarketPrice"));
-		System.out.println("Previous close: " + obj.get("regularMarketPreviousClose"));
-		System.out.println("Market Cap: " + obj.get("marketCap"));
-		System.out.println("Volume: " + obj.get("regularMarketVolume"));
-		System.out.println("Exchange: " + obj.get("exchange"));
-		System.out.println("Shares outstanding: " + obj.get("sharesOutstanding"));
-		
-
-		Unirest.shutDown();
+	public static void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 	}
 	
-	// callNews: Calls Yahoo API --> get news headlines and story summary
-	public static void callNews(String symbol, String key, Scanner sc2) {
-		HttpResponse<String> response = Unirest.get("https://yahoo-finance-low-latency.p.rapidapi.com/v2/finance/news?symbols=" + symbol)
-				.header("x-rapidapi-key", key)
-				.header("x-rapidapi-host", "yahoo-finance-low-latency.p.rapidapi.com")
-				.asString();
-		
-		String json = response.getBody();	// Get the response
-		
-//		System.out.println(json);
-		/* You can get a summary of the stories as well - summary
-		 * URL of story - url
-		 * Author - author_name
-		 * Time - provider_publish_time
-		 * Source - provider_name
-		 * Time zone - timeZoneShortName
-		 * 
-		 */
-		JSONObject obj = new JSONObject(json);
-		obj = obj.getJSONObject("Content");		
-		JSONArray arr = new JSONArray(obj.get("result").toString());
-	 
-		for(int i = 0; i < arr.length(); i++) {
-			obj = new JSONObject(arr.opt(i).toString());
-			LocalDateTime date = LocalDateTime.ofEpochSecond(Long.parseLong(obj.get("provider_publish_time").toString()), 0, ZoneOffset.MIN);
-			System.out.println("(" + (i + 1) + ") "+ obj.get("title") + 
-					" - " + date.toLocalDate() + " " + date.toLocalTime() + 
-					" " + obj.get("timeZoneShortName"));
-			System.out.println();
-		}
-		
-		System.out.print("Select story summary: ");
-		int selection = sc2.nextInt();
-		obj = new JSONObject(arr.opt(selection - 1).toString());
-		System.out.println(obj.get("summary"));
-		
-		Unirest.shutDown();
+	public static void programTitle() {
+		clearScreen();
+		System.out.flush();
+		System.out.println("#####################################################");
+		System.out.println("#                                                   #");
+		System.out.println("#                                                   #");
+		System.out.println("#                   Stock Terminal                  #");
+		System.out.println("#                                                   #");
+		System.out.println("#                                                   #");
+		System.out.println("#####################################################\n");
 	}
+	
+	public static void mainMenu() {
+		System.out.println("*** Main Menu ***\n ");
+		System.out.println("1. Get Quotes");
+		System.out.println("2. Latest News");
+		System.out.println("3. Start Trading --> as part of a database");
+		System.out.println("4. View Portfolio --> as part of a database");
+		System.out.println("5. Quit\n");
+		System.out.print("Selection: ");
+	}
+	
+	public static void quoteTitle() {
+		clearScreen();
+		System.out.println("\n*** Stock Quotes *** \n");
+	}
+	
+	
+	public static void tradingTitle() {
+		clearScreen();
+		System.out.println("\n*** Trading Dashboard *** ");
+		
+	}
+	
+	public static void trade() {
+		System.out.println("Placeholder\n");
+		// Account creation / login screen
+		// Menu options (buy/sell/trade, fund account, etc)
+	    // Database updated
+	}
+	
+	public static void portfolioTitle() {
+		clearScreen();
+		System.out.println("\n*** Portfolio *** ");
+	}
+	
+	public static void portfolio() {
+		System.out.println("Placeholder\n");
+		// Login screen
+		// Code to grab all current stock prices and and make calculations (gains/losses)
+		// Database updated
+	}
+	
+	
+	
 
 }
