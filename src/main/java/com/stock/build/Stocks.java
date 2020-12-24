@@ -34,8 +34,6 @@ public class Stocks {
 						.header("x-rapidapi-host", "yahoo-finance-low-latency.p.rapidapi.com")
 						.asString();
 					
-				;	// Get the response 
-
 				/* Getting objects from JSON object & JSON array */
 				JSONObject obj = new JSONObject(response.getBody());	// Get the response, store it in JSON object
 				obj = new JSONObject(obj.get("quoteResponse").toString());

@@ -14,28 +14,15 @@ public class EconomicData {
 	 * So that instance can be created
 	 * May not be necessary
 	 */
-	static void gdp(Scanner sc) throws Exception {
+	static void gdp(String dataType, String seriesId, boolean recent) throws Exception {
 		String filename = "/Users/jasonmoreau/Desktop/API Keys/fred.txt";
 		File file = new File(filename);
 		FileInputStream in = new FileInputStream(file);
 		byte [] data = new byte [32];
 		in.read(data);
 		String key = new String(data);
-
-		/* Might have create options so that user doesn't have to type
-		 * in data type and series id
-		 * 
-		 * Real GDP
-		 * GDPC1
-		 * data type: series/observations
-		 * series id: gdpc1
-		 */ 
-		System.out.print("Data type: ");
-		String type = sc.nextLine().toLowerCase();
-		System.out.print("Series ID: ");
-		String seriesId = sc.nextLine().toUpperCase();
-
-		HttpResponse<String> response = Unirest.get("https://api.stlouisfed.org/fred/" + type)
+		
+		HttpResponse<String> response = Unirest.get("https://api.stlouisfed.org/fred/" + dataType)
 						.queryString("series_id", seriesId)
 						.queryString("api_key", key)
 						.queryString("file_type", "json")
@@ -43,10 +30,16 @@ public class EconomicData {
 		
 		JSONObject obj = new JSONObject(response.getBody());
 		JSONArray arr = new JSONArray(obj.get("observations").toString());
+		
+		
 		// The latest GDP observation in the series
-		obj = new JSONObject(arr.get(294).toString());
-		// Prints the object in JSON format
-		System.out.println(obj.toString(1));
+		if(recent == true){
+			obj = new JSONObject(arr.get(arr.length() - 1).toString());	
+		}
+		
+		System.out.println("\n" + obj.get("date") + " to " + obj.get("realtime_start"));
+		System.out.println("Billions of Chained 2012 Dollars,\n" + 
+				"Seasonally Adjusted Annual Rate: " + obj.get("value") + "\n");
 			
 		in.close();
 	}

@@ -17,39 +17,55 @@ public class Terminal {
 		in.read(arr);
 		Scanner sc = new Scanner(System.in);
 		String key = new String(arr);
-		
 		boolean start = true;
-		String selection = "";
+		int selection = 0;
+		
 		programTitle();
 		
 		while(start) {
 			mainMenu();
-			selection = sc.nextLine();
-			if(selection.matches("1")) {
-				quoteTitle();
-				Stocks.callQuote(key, sc);
-			} else if(selection.matches("2")) {
-				newsTitle();
-				Stocks.callNews(key, sc);
-			} else if(selection.matches("3")) {
-				economicTitle();
-				EconomicData.gdp(sc);
-			} else if(selection.matches("4")) {
-				tradingTitle();
-				trade();
-				// as a placeholder
-			} else if(selection.matches("5")) {
-				portfolioTitle();
-				portfolio();
-				// as a placeholder
-			} else if(selection.matches("6")) {
-				System.out.println("\nGoodbye");
-				start = false;
+			selection = sc.nextInt();
+			switch(selection) {
+			case 1: quoteTitle();
+					Stocks.callQuote(key, sc);
+					break;
+			case 2: newsTitle();
+					Stocks.callNews(key, sc);
+					break;
+			case 3: economicTitle();
+				    economicMenu(sc);
+				    break;
+			case 4: tradingTitle();		// as a placeholder
+					trade();
+					break;
+			case 5: portfolioTitle();	// as a placeholder
+					portfolio();
+					break;
+			case 6: System.out.println("\nGoodbye");
+					start = false;
+					break;
+			default: break;
 			}
 		}		
 		
 		sc.close();
 		in.close();		
+	}
+	
+	public static void economicMenu(Scanner sc) throws Exception {
+		int selection = 0;
+		System.out.println("Menu\n");
+		System.out.println("1. Recent US GDP Data\n");
+		System.out.print("Selection: ");
+		selection = sc.nextInt();
+		switch(selection) {
+		case 1: String dataType = "series/observations";
+				String seriesId = "GDPC1";
+				boolean recent = true;
+				EconomicData.gdp(dataType, seriesId, recent);
+				break;
+		}
+		
 	}
 	
 	public static void clearScreen() {
@@ -85,13 +101,6 @@ public class Terminal {
 		System.out.println("\n*** Stock Quotes *** \n");
 	}
 	
-	
-	public static void tradingTitle() {
-		clearScreen();
-		System.out.println("\n*** Trading Dashboard *** ");
-		
-	}
-	
 	public static void newsTitle() {
 		clearScreen();
 		System.out.println("\n*** Latest News *** \n");
@@ -102,11 +111,10 @@ public class Terminal {
 		System.out.println("\n*** Economic Data *** \n");
 	}
 	
-	public static void trade() {
-		System.out.println("Placeholder\n");
-		// Account creation / login screen
-		// Menu options (buy/sell/trade, fund account, etc)
-	    // Database updated
+	public static void tradingTitle() {
+		clearScreen();
+		System.out.println("\n*** Trading Dashboard *** ");
+		
 	}
 	
 	public static void portfolioTitle() {
@@ -114,11 +122,22 @@ public class Terminal {
 		System.out.println("\n*** Portfolio *** ");
 	}
 	
+	public static void trade() {
+		System.out.println("Placeholder\n");
+		/* Account creation / login screen
+		 * Menu options (buy/sell/trade, fund account, etc)
+		 * Stock predictions (ML)
+		 * Predictions based on stocks in your portfolio
+		 * Database updated
+		 */
+	}
+	
 	public static void portfolio() {
 		System.out.println("Placeholder\n");
-		// Login screen
-		// Code to grab all current stock prices and and make calculations (gains/losses)
-		// Database updated
+		/* Login screen
+		 * Code to grab all current stock prices and and make calculations (gains/losses)
+		 * Database updated 
+		 */
 	}
 	
 	
