@@ -1,6 +1,10 @@
 /* Stock Terminal 
- * Program retrieves current stock prices
- * Obtains data from Yahoo Finance
+ * Bloomberg Terminal like application
+ * Retrieves data from Yahoo Finance API
+ * Retrieves data from FRED (St. Louis Federal Reserve) API
+ * Makes stock predictions based on your portfolio
+ * 
+ * 
  */
 
 package com.stock.build;
