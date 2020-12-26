@@ -5,7 +5,7 @@
 
 
 # Create deep neural network in order to predict stocks
-# NN will be deployed in the Google AI Platform for use in Stock Terminal program
+# NN will be deployed in Google AI Platform for use in Stock Terminal program
 
 
 # In[3]:
@@ -108,35 +108,53 @@ frame
 
 # Apple (AAPL) 5-Year stock chart --> scatter plot w/o years
 plt.figure(figsize=(20,10))
-plt.scatter(frame[0], frame[4], color='b', s = 2)
+plt.scatter(frame[0], frame[4], color = 'b', s = 2)
 
 
-# In[271]:
+# In[284]:
 
 
-# Scale train and test data
+# Normalize training and test data
+from sklearn.preprocessing import Normalizer
+
+def normalize_data(data_train, data_test):
+    normalize = Normalizer()
+    data_train = normalize.fit_transform(data_train)
+    data_test = normalize.fit_transform(data_test)
+    return data_train, data_test
+
+X_train, X_test = normalize_data(X_train, X_test)
+
+
+# In[285]:
+
+
+# Function to scale train and test data
+# Will use later
 from sklearn.preprocessing import StandardScaler
 
-scaled = StandardScaler()
-X_train_fitted = scaled.fit_transform(X_train)
-X_test_fitted = scaled.fit_transform(X_test)
+def scale_data(data_train, data_test):
+    scaled = StandardScaler()
+    data_test = scaled.fit_transform(data_train)
+    data_train = scaled.fit_transform(data_test)
+    return data_train, data_test
 
 
-# In[272]:
+# In[286]:
 
 
 # Convert scaled training data to data frame for viewing
 df_data = pd.DataFrame(X_train_fitted)
 
 
-# In[273]:
+# In[287]:
 
 
 # Print data frame
 df_data
 
 
-# In[275]:
+# In[288]:
 
 
 # Visualize scaled training data
