@@ -29,6 +29,7 @@ public class Terminal {
 		while(start) {
 			mainMenu();
 			selection = sc.nextInt();
+			sc.nextLine();
 			switch(selection) {
 			case 1: quoteTitle();
 					Stocks.callQuote(key, sc);

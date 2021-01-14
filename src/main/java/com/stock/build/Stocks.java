@@ -17,12 +17,12 @@ public class Stocks {
 	public static void callQuote(String key, Scanner sc) throws Exception {
 		boolean quoteLoop = true;
 		String selection = "";
-			 
+		
 		while(quoteLoop) { 
 			System.out.println("1. Current stock quote");
 			System.out.println("2. Historic data\n");
 			System.out.print("Selection: ");
-			selection = sc.nextLine();
+			selection = sc.next();
 			
 			if(selection.matches("1")) {
 				clearScreen();
@@ -59,14 +59,13 @@ public class Stocks {
 			}
 			quoteLoop = false;
 		}
-		sc.nextLine();	// clear scanner
 	}
 	
 	// callNews: Calls Yahoo API --> get news headlines and story summary
 	public static void callNews(String key, Scanner sc) {
-		System.out.println("Enter stock symbol: ");
-		String symbol = sc.nextLine().toUpperCase();
-		
+		System.out.print("Enter stock symbol: ");
+		String symbol = sc.next().toUpperCase();
+		sc.nextLine();
 		
 		HttpResponse<String> response = Unirest.get("https://yahoo-finance-low-latency.p.rapidapi.com/v2/finance/news?symbols=" + symbol)
 				.header("x-rapidapi-key", key)
@@ -95,7 +94,7 @@ public class Stocks {
 		}
 		
 		System.out.print("Read story summary? Y or N\n");
-		boolean readSummary = (sc.nextLine().toUpperCase().matches("Y")) ? true : false;
+		boolean readSummary = (sc.next().toUpperCase().matches("Y")) ? true : false;
 		
 		if(readSummary) {
 			System.out.print("Select a number to select a story: ");
