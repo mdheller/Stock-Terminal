@@ -15,6 +15,10 @@ import java.util.Scanner;
 
 public class Terminal {
 	public static void main(String[] args) throws Exception {
+		new Terminal().run();
+	}
+	
+	void run() throws Exception {
 		File file = new File("/Users/jasonmoreau/Desktop/API Keys/rapidapi.txt");
 		FileInputStream in = new FileInputStream(file);
 		byte [] arr = new byte[50]; 	// must match size of key length
@@ -29,7 +33,7 @@ public class Terminal {
 		while(start) {
 			mainMenu();
 			selection = sc.nextInt();
-			sc.nextLine();
+			sc.nextLine();				// clear scanner
 			switch(selection) {
 			case 1: quoteTitle();
 					Stocks.callQuote(key, sc);
@@ -50,6 +54,7 @@ public class Terminal {
 					start = false;
 					break;
 			default: break;
+			
 			}
 		}		
 		
@@ -57,7 +62,7 @@ public class Terminal {
 		in.close();		
 	}
 	
-	public static void economicMenu(Scanner sc) throws Exception {
+	void economicMenu(Scanner sc) throws Exception {
 		int selection = 0;
 		System.out.println("Menu\n");
 		System.out.println("1. Recent US GDP Data\n");
@@ -73,12 +78,12 @@ public class Terminal {
 		
 	}
 	
-	public static void clearScreen() {
+	void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 	
-	public static void programTitle() {
+	void programTitle() {
 		clearScreen();
 		System.out.flush();
 		System.out.println("#####################################################");
@@ -90,7 +95,7 @@ public class Terminal {
 		System.out.println("#####################################################\n");
 	}
 	
-	public static void mainMenu() {
+	void mainMenu() {
 		System.out.println("*** Main Menu ***\n ");
 		System.out.println("1. Get Quotes");
 		System.out.println("2. Latest News");
@@ -101,33 +106,33 @@ public class Terminal {
 		System.out.print("Selection: ");
 	}
 	
-	public static void quoteTitle() {
+	void quoteTitle() {
 		clearScreen();
 		System.out.println("\n*** Stock Quotes *** \n");
 	}
 	
-	public static void newsTitle() {
+	void newsTitle() {
 		clearScreen();
 		System.out.println("\n*** Latest News *** \n");
 	}
 	
-	public static void economicTitle() {
+	void economicTitle() {
 		clearScreen();
 		System.out.println("\n*** Economic Data *** \n");
 	}
 	
-	public static void tradingTitle() {
+	void tradingTitle() {
 		clearScreen();
 		System.out.println("\n*** Trading Dashboard *** ");
 		
 	}
 	
-	public static void portfolioTitle() {
+	void portfolioTitle() {
 		clearScreen();
 		System.out.println("\n*** Portfolio *** ");
 	}
 	
-	public static void trade() {
+	void trade() {
 		System.out.println("Placeholder\n");
 		/* Account creation / login screen
 		 * Menu options (buy/sell/trade, fund account, etc)
