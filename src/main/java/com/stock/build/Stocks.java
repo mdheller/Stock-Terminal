@@ -14,7 +14,7 @@ import kong.unirest.Unirest;
 public class Stocks {
 	
 	// callQuote: Calls Yahoo API --> get stock symbol, current price, and previous close
-	public static void callQuote(String key, Scanner sc) throws Exception {
+	static void callQuote(String key, Scanner sc) throws Exception {
 		boolean quoteLoop = true;
 		String selection = "";
 		
@@ -62,7 +62,7 @@ public class Stocks {
 	}
 	
 	// callNews: Calls Yahoo API --> get news headlines and story summary
-	public static void callNews(String key, Scanner sc) {
+	static void callNews(String key, Scanner sc) {
 		System.out.print("Enter stock symbol: ");
 		String symbol = sc.next().toUpperCase();
 		sc.nextLine();
@@ -111,7 +111,7 @@ public class Stocks {
 		Unirest.shutDown();
 	}
 	
-	public static void clearScreen() {
+	static void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}

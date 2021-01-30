@@ -142,7 +142,7 @@ public class Terminal {
 		 */
 	}
 	
-	public static void portfolio() {
+	void portfolio() {
 		System.out.println("Placeholder\n");
 		/* Login screen
 		 * Code to grab all current stock prices and and make calculations (gains/losses)
