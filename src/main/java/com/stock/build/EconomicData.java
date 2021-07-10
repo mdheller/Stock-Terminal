@@ -15,7 +15,7 @@ public class EconomicData {
 	 * May not be necessary
 	 */
 	static void gdp(String dataType, String seriesId, boolean recent) throws Exception {
-		String filename = "/Users/jasonmoreau/Desktop/API Keys/fred.txt";
+		String filename = "/Users/jasonmoreau/Desktop/Consolidate/API Keys/fred.txt";
 		File file = new File(filename);
 		FileInputStream in = new FileInputStream(file);
 		byte [] data = new byte [32];

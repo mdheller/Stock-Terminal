@@ -3,12 +3,29 @@
   <groupId>com.stock.build</groupId>
   <artifactId>com.stock.build</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Yahoo API</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <name>Yahoo API</name>
   <dependencies>
   	<dependency>
   		<groupId>com.konghq</groupId>
   		<artifactId>unirest-java</artifactId>
   	</dependency>
+      <dependency>
+          <groupId>org.json</groupId>
+          <artifactId>json</artifactId>
+          <version>20201115</version>
+      </dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>
